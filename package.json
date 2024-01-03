@@ -2,6 +2,7 @@
   "name": "node",
   "version": "1.0.0",
   "main": "script.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon server.js",
     "build": "react-scripts build",
