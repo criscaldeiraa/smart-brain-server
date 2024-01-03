@@ -1,4 +1,4 @@
-const KEY = process.env.API.CLARIFAI;
+const KEY = process.env.API_CLARIFAI;
 const USER_ID = 'clarifai';
 const APP_ID = 'main';
 const MODEL_ID = 'face-sentiment-recognition';
