@@ -7,7 +7,7 @@ const APP_ID = 'main';
 const MODEL_ID = 'face-sentiment-recognition';
 const MODEL_VERSION_ID = 'a5d7776f0c064a41b48c3ce039049f65';
 
-const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
+import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
 const stub = ClarifaiStub.grpc();
 
@@ -74,7 +74,7 @@ const handleImage = (req, res, db)  => {
     .catch(err => res.status(400).json('unable to get entries'))
   }
 
-module.exports = {
+export default {
     handleImage,
     handleApiCall
 }
