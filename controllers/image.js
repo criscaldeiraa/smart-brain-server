@@ -1,14 +1,15 @@
+const KEY = process.env.API.CLARIFAI;
 const USER_ID = 'clarifai';
 const APP_ID = 'main';
-
 const MODEL_ID = 'face-sentiment-recognition';
 const MODEL_VERSION_ID = 'a5d7776f0c064a41b48c3ce039049f65';
 
 import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
+
+
 const stub = ClarifaiStub.grpc();
 
-const KEY = process.env.API.CLARIFAI;
 
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key" + KEY);
@@ -52,11 +53,6 @@ const handleApiCall = (req, res) => {
       }
   )
 }
-  // app.models.predict('face-detection', req.body.input)
-  //   .then(data => {
-  //     res.json(data);
-  //   })
-  //   .catch(err => res.status(400).json('unable to work with API'))
 
 const handleImage = (req, res, db)  => {
     const { id } = req.body;
