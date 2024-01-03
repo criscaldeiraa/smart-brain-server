@@ -14,11 +14,6 @@ const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key" + KEY);
 
-// const Clarifai = require('clarifai');
-
-// const app = new Clarifai.App({
-//   apiKey: 'd55512437b5d462dba142d169c9d4c05'
-//  });
 const handleApiCall = (req, res) => {
   stub.PostModelOutputs(
     {
@@ -69,4 +64,4 @@ const handleImage = (req, res, db)  => {
     .catch(err => res.status(400).json('unable to get entries'))
   }
 
-export default { handleImage, handleApiCall };
+export { handleImage, handleApiCall };
