@@ -1,6 +1,3 @@
-
-const PAT = 'd55512437b5d462dba142d169c9d4c05';
-
 const USER_ID = 'clarifai';
 const APP_ID = 'main';
 
@@ -11,8 +8,10 @@ import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
 const stub = ClarifaiStub.grpc();
 
+const KEY = process.env.API.CLARIFAI;
+
 const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key d55512437b5d462dba142d169c9d4c05");
+metadata.set("authorization", "Key" + KEY);
 
 // const Clarifai = require('clarifai');
 
