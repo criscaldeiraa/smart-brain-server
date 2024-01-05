@@ -2,6 +2,7 @@ import express, { json } from 'express';
 import bcrypt from 'bcrypt-nodejs';
 import cors from 'cors';
 import knex from 'knex';
+import fetch from 'node-fetch';
 
 import handleRegister from './controllers/register.js';
 import handleSignin from './controllers/signin.js';
@@ -27,10 +28,10 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-app.use(cors())
+app.use(cors());
 app.use(json());
 
-app.get('/', (req, res)=> { res.send(db.users) })
+app.get('/', (req, res) => { res.send(db.users) })
 app.post('/signin', handleSignin(db, bcrypt))
 app.post('/register', (req, res) => { handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { handleProfileGet(req, res, db)})
