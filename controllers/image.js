@@ -1,20 +1,23 @@
-const KEY = process.env.API_CLARIFAI;
-const USER_ID = 'clarifai';
-const APP_ID = 'main';
-const MODEL_ID = 'face-sentiment-recognition';
-const MODEL_VERSION_ID = 'a5d7776f0c064a41b48c3ce039049f65';
+import dotenv from 'dotenv';
+dotenv.config();
 
 import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
-
+const PAT = process.env.API_CLARIFAI;
+const USER_ID = 'clarifai';
+const APP_ID = 'main';
+const MODEL_ID = 'face-sentiment-recognition';
 
 const stub = ClarifaiStub.grpc();
 
-
 const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key" + KEY);
+metadata.set("authorization", "Key" + PAT);
 
 const handleApiCall = (req, res) => {
+  const { input } = req.body;
+  if (!input) {
+    return res.status(400).json(formatError("please provide image url"));
+  }
   stub.PostModelOutputs(
     {
       user_app_id: {
@@ -22,46 +25,43 @@ const handleApiCall = (req, res) => {
           "app_id": APP_ID
       },
       model_id: MODEL_ID,
-      version_id: MODEL_VERSION_ID, // This is optional. Defaults to the latest model version
       inputs: [
-          { data: { image: { url: req.body.input } } }
+          { data: { image: { url: req.body.input, allow_duplicate_url: true } } }
       ]
   },
   metadata,
   (err, response) => {
       if (err) {
-          throw new Error(err);
+        console.log(err);
+        res.status(400).json(formatError("something is wrong"));
       }
 
       if (response.status.code !== 10000) {
-          throw new Error("Post model outputs failed, status: " + response.status.description);
+        console.log(response.status.description);
+        res.status(400).json(formatError("something is wrong"));
       }
-
-      // Since we have one input, one output will exist here
-      
-
-      console.log("Predicted concepts:");
-      for (const c of response.outputs[0].data.concepts) {
-          console.log(c.name + " " + concept.value);
-      }
+      // console.log("Predicted concepts:");
+      // for (const c of response.outputs[0].data.concepts) {
+      //     console.log(c.name + " " + concept.value);
+      // }
         res.json(response)
       }
   )
-}
+};
 
-const handleImage = (req, res, db)  => {
-    const { id } = req.body;
-    db('users').where('id', '=', id)
-    .increment('entries', 1)
-    .returning('entries')
-    .then(entries => {
-      // If you are using knex.js version 1.0.0 or higher this now returns an array of objects. Therefore, the code goes from:
-      // entries[0] --> this used to return the entries
-      // TO
-      // entries[0].entries --> this now returns the entries
-      res.json(entries[0].entries);
-    })
-    .catch(err => res.status(400).json('unable to get entries'))
+const handleImage = async (req, res, db)  => {
+  const { id } = req.body;
+  const userEntries = await db
+    .table("users")
+    .where({ id: id })
+    .increment({ entries: 1 })
+    .returning("entries");
+
+  if (userEntries.length) {
+    res.json(userEntries[0].entries);
+  } else {
+    res.status(404).json(formatError("user not found"));
   }
+};
 
 export { handleImage, handleApiCall };
