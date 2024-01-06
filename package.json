@@ -19,7 +19,6 @@
     "clarifai": "^2.9.1",
     "clarifai-nodejs-grpc": "^9.11.4",
     "cors": "^2.8.5",
-    "cors-anywhere": "^0.4.4",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "knex": "^2.5.1",
@@ -32,6 +31,7 @@
   },
   "devDependencies": {
     "@types/bcrypt-nodejs": "^0.0.31",
+    "cors-anywhere": "^0.4.4",
     "nodemon": "^3.0.1"
   },
   "description": ""
