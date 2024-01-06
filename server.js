@@ -2,6 +2,7 @@ import express, { json } from 'express';
 import bcrypt from 'bcrypt-nodejs';
 import cors from 'cors';
 import knex from 'knex';
+import cors_proxy from 'cors-anywhere';
 
 import handleRegister from './controllers/register.js';
 import handleSignin from './controllers/signin.js';
@@ -26,6 +27,14 @@ const db = knex({
 const app = express();
 
 const PORT = process.env.PORT || 8080;
+
+cors_proxy.createServer({
+    originWhitelist: [], // Allow all origins
+    requireHeader: ['origin', 'x-requested-with'],
+    removeHeaders: ['cookie', 'cookie2']
+}).listen(port, host, function() {
+    console.log('Running CORS Anywhere on ' + host + ':' + port);
+});
 
 const whitelist = process.env.WHITELISTED_DOMAINS
   ? process.env.WHITELISTED_DOMAINS.split(",")
