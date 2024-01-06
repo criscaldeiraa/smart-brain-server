@@ -30,7 +30,6 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
-import cors_proxy from 'cors-anywhere';
 
 (function() {
   var cors_api_host = 'cors-anywhere.herokuapp.com';
