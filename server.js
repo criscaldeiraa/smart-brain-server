@@ -27,11 +27,22 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
+const whitelist = process.env.WHITELISTED_DOMAINS
+  ? process.env.WHITELISTED_DOMAINS.split(",")
+  : []
+
 const corsOptions = {
-  origin: '*',
-  methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials: true,
+  
 }
+
 app.use(cors(corsOptions));
 
 app.use(express.json());
