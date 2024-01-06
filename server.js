@@ -2,7 +2,6 @@ import express, { json } from 'express';
 import bcrypt from 'bcrypt-nodejs';
 import cors from 'cors';
 import knex from 'knex';
-import fetch from 'node-fetch';
 
 import handleRegister from './controllers/register.js';
 import handleSignin from './controllers/signin.js';
