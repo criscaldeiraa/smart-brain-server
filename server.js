@@ -24,11 +24,12 @@ const db = knex({
 });
 
 const app = express();
-app.use(cors());
 
 const PORT = process.env.PORT || 8080;
 
-app.use(json());
+app.use(cors());
+app.use(express.json());
+
 
 app.get('/', (req, res) => { res.send(db.users) })
 app.post('/signin', handleSignin(db, bcrypt))
