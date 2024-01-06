@@ -33,7 +33,7 @@ cors_proxy.createServer({
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2']
 }).listen(PORT, process.env.DATABASE_HOST, function() {
-    console.log('Running CORS Anywhere on ' + host + ':' + port);
+    console.log('Running CORS Anywhere on ' + process.env.DATABASE_HOST + ':' + PORT);
 });
 
 const whitelist = process.env.WHITELISTED_DOMAINS
