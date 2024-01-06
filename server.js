@@ -2,7 +2,7 @@ import express, { json } from 'express';
 import bcrypt from 'bcrypt-nodejs';
 import cors from 'cors';
 import knex from 'knex';
-import cors_proxy from 'cors-anywhere';
+
 
 import handleRegister from './controllers/register.js';
 import handleSignin from './controllers/signin.js';
@@ -29,14 +29,6 @@ app.use(cors())
 app.use(express.json()); 
 
 const PORT = process.env.PORT || 8080;
-
-cors_proxy.createServer({
-    originWhitelist: [], // Allow all origins
-    requireHeader: ['origin', 'x-requested-with'],
-    removeHeaders: ['cookie', 'cookie2']
-}).listen(PORT, process.env.DATABASE_HOST, function() {
-    console.log('Running CORS Anywhere on ' + process.env.DATABASE_HOST + ':' + PORT);
-});
 
 app.get('/', (req, res) => { res.send(db.users) })
 app.post('/signin', handleSignin(db, bcrypt))
