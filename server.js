@@ -25,6 +25,8 @@ const db = knex({
 });
 
 const app = express();
+app.use(cors())
+app.use(express.json()); 
 
 const PORT = process.env.PORT || 8080;
 
@@ -35,26 +37,6 @@ cors_proxy.createServer({
 }).listen(PORT, process.env.DATABASE_HOST, function() {
     console.log('Running CORS Anywhere on ' + process.env.DATABASE_HOST + ':' + PORT);
 });
-
-const whitelist = process.env.WHITELISTED_DOMAINS
-  ? process.env.WHITELISTED_DOMAINS.split(",")
-  : []
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error("Not allowed by CORS"))
-    }
-  },
-  credentials: true,
-  
-}
-
-app.use(cors(corsOptions));
-
-app.use(express.json());
 
 app.get('/', (req, res) => { res.send(db.users) })
 app.post('/signin', handleSignin(db, bcrypt))
