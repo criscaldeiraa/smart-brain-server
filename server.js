@@ -27,7 +27,13 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-app.use(cors());
+const corsOptions = {
+  origin: '*',
+  methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.get('/', (req, res) => { res.send(db.users) })

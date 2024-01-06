@@ -1,10 +1,6 @@
 import {formatError} from '../utils/formatError.js';
-import cors from 'cors';
-import express, { json } from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
-const app = express();
-app.options('*', cors());
 import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
 const PAT = process.env.API_CLARIFAI;
