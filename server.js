@@ -29,7 +29,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
-
+app.options('*', cors());
 
 app.get('/', (req, res) => { res.send(db.users) })
 app.post('/signin', handleSignin(db, bcrypt))
