@@ -9,6 +9,11 @@ import handleSignin from './controllers/signin.js';
 import handleProfileGet from './controllers/profile.js';
 import { handleImage, handleApiCall } from './controllers/image.js';
 
+const app = express();
+
+app.use(cors())
+
+app.use(express.json()); 
 
 
 const db = knex({
@@ -17,31 +22,24 @@ const db = knex({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
     host : process.env.DATABASE_HOST,
-    port: 5432,
+    port: process.env.PORT,
     user : process.env.DATABASE_USER,
     password : process.env.DATABASE_PW,
     database : process.env.DATABASE_DB
   }
 });
 
-const app = express();
-app.use(cors())
-app.use(express.json()); 
-
-// const whiteList = ['']
-// const corsOptions
-
 
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => { res.send(db.users) })
-app.post('/signin', handleSignin(db, bcrypt))
+app.post('/signin', (req, res) => { handleSignin(req, res, db, bcrypt) })
 app.post('/register', (req, res) => { handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { handleProfileGet(req, res, db)})
 app.put('/image', (req, res) => { handleImage(req, res, db)})
 app.post('/imageurl', (req, res) => { handleApiCall(req, res)})
 
 
-app.listen(PORT, () => {
+app.listen(PORT, function () {
   console.log(`Server is running on port : ${PORT}`);
 });
