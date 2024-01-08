@@ -3,10 +3,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
+
+
 const PAT = process.env.API_CLARIFAI;
-const USER_ID = 'clarifai';
+const USER_ID = 'criscaldeiraa';
 const APP_ID = 'main';
-const MODEL_ID = 'face-sentiment-recognition';
+const MODEL_ID = 'face-detection';
+const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105'
+
 
 const stub = ClarifaiStub.grpc();
 
