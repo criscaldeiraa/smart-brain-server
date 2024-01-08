@@ -28,6 +28,10 @@ const app = express();
 app.use(cors())
 app.use(express.json()); 
 
+// const whiteList = ['']
+// const corsOptions
+
+
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => { res.send(db.users) })
