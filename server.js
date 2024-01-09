@@ -11,11 +11,11 @@ import { handleImage, handleApiCall } from './controllers/image.js';
 
 const app = express();
 
+app.use(express.json());
 app.use(cors())
+app.options('*', cors())
 
-app.use(express.json()); 
-
-var whitelist = ['https://smart-brain-back-end-vmuu.onrender.com/imageurl', 'https://smart-brain-back-end-vmuu.onrender.com/image']
+var whitelist = ['https://smart-brain-back-end-vmuu.onrender.com', 'https://smart-brain-back-end-vmuu.onrender.com/', 'https://smart-brain-back-end-vmuu.onrender.com/imageurl', 'https://smart-brain-back-end-vmuu.onrender.com/image']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
