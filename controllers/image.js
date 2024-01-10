@@ -13,8 +13,6 @@ const APP_ID = 'main';
 const MODEL_ID = 'face-detection';
 const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
 
-const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
-
 const stub = ClarifaiStub.grpc();
 
 const metadata = new grpc.Metadata();
