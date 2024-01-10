@@ -3,13 +3,13 @@ import bcrypt from 'bcrypt-nodejs';
 import cors from 'cors';
 import knex from 'knex';
 
-
 import handleRegister from './controllers/register.js';
 import handleSignin from './controllers/signin.js';
 import handleProfileGet from './controllers/profile.js';
 import { handleImage, handleApiCall } from './controllers/image.js';
 
 const app = express();
+const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors())
@@ -39,7 +39,6 @@ const db = knex({
   }
 });
 
-const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => { res.send(db.users) })
 app.post('/signin', (req, res) => { handleSignin(req, res, db, bcrypt) })
