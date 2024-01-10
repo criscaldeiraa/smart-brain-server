@@ -39,7 +39,6 @@ const db = knex({
   }
 });
 
-
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => { res.send(db.users) })
@@ -47,7 +46,7 @@ app.post('/signin', (req, res) => { handleSignin(req, res, db, bcrypt) })
 app.post('/register', (req, res) => { handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { handleProfileGet(req, res, db)})
 app.put('/image', cors(corsOptionsDelegate), (req, res) => { handleImage(req, res, db)})
-app.post('/imageurl', cors(corsOptionsDelegate), (req, res) => { handleApiCall(req, res)})
+app.post('/imageurl', cors(corsOptionsDelegate), (req, res) => { handleApiCall(req, res, imageUrl)})
 
 
 app.listen(PORT, function () {
