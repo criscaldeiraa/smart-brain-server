@@ -10,6 +10,7 @@ const USER_ID = 'clarifai';
 const APP_ID = 'main';
 const MODEL_ID = 'face-detection';
 const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105'
+const IMAGE_URL = req.body.imageUrl
 
 const raw = JSON.stringify({
   "user_app_id": {
@@ -21,7 +22,6 @@ const raw = JSON.stringify({
           "data": {
               "image": {
                   "url": IMAGE_URL
-                  // "base64": IMAGE_BYTES_STRING
               }
           }
       }
